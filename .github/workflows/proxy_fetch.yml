@@ -1,0 +1,23 @@
+name: Proxy 抓取
+
+env:
+  TZ: Asia/Shanghai
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 分钟 小时 日期 月份 星期（0-6）//0代表星期天
+    - cron: "30 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/proxy_fetch.yml"
+      - ".github/workflows/cron.yml"
+      - "proxy_fetch/**"
+
+jobs:
+  run:
+    uses: ./.github/workflows/cron.yml
+    with:
+      name: proxy_fetch
+    secrets: inherit
